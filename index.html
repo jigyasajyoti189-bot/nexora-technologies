@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexora Technologies — Technology that moves you forward</title>
+  <meta name="description" content="Intelligent digital solutions simplifying business operations, cloud management, education and event organization under one unified ecosystem." />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- React 18 & ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- Babel Standalone -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Geist', 'sans-serif'],
+            mono: ['Geist Mono', 'monospace'],
+          },
+          colors: {
+            nexora: {
+              learn: '#2864D7',
+              cloud: '#16865B',
+              events: '#8054CE',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #FFFFFF;
+      color: #171717;
+      -webkit-font-smoothing: antialiased;
+    }
+    .subtle-border { border: 1px solid rgba(0, 0, 0, 0.08); }
+    .card-shadow { box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05); }
+  </style>
+</head>
+<body class="bg-white text-[#171717] antialiased selection:bg-blue-50 selection:text-blue-700">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useMemo } = React;
+
+    const BRAND_CONFIG = {
+      company: {
+        name: "Nexora Technologies",
+        tagline: "Technology that moves you forward.",
+        heroSupporting: "Discover a smarter way to learn, manage cloud infrastructure and organize events with the Nexora ecosystem.",
+      },
+      products: {
+        learn: {
+          id: "learn",
+          name: "Nexora Learn",
+          category: "Cloud-Based Learning Management Platform",
+          color: "#2864D7",
+          heroPill: "Enterprise EdTech Platform",
+          headline: "Architect modern, high-impact digital learning trajectories.",
+          summary: "A unified platform built for academic institutions and enterprise training to create, distribute, and analyze educational curricula at scale.",
+          features: [
+            { title: "Modular Curriculum Studio", desc: "Build rich interactive courses with live SCORM compliance and automated rubric creation." },
+            { title: "Predictive Learner Telemetry", desc: "AI-driven engagement alerts flagging student drop-off risks before milestones are missed." },
+            { title: "Automated Credential Minting", desc: "Instantly issue verifiable digital credentials and tamper-proof transcripts upon course completion." },
+            { title: "Enterprise Cohort Governance", desc: "Seamless multi-tenant role isolation with Okta/Azure AD SAML 2.0 single sign-on." }
+          ],
+          mockupData: {
+            stats: [
+              { label: "Active Cohorts", val: "248" },
+              { label: "Avg. Completion", val: "94.2%" },
+              { label: "Total Students", val: "18,420" }
+            ],
+            recentCourses: [
+              { name: "Distributed Systems Engineering", progress: 88, students: 412 },
+              { name: "Clinical Bioethics & Compliance", progress: 96, students: 820 },
+              { name: "Advanced Financial Econometrics", progress: 64, students: 195 }
+            ]
+          }
+        },
+        cloud: {
+          id: "cloud",
+          name: "Nexora Cloud",
+          category: "Cloud Infrastructure Management Software",
+          color: "#16865B",
+          heroPill: "Simulated Telemetry Engine",
+          headline: "Complete infrastructure visibility across hybrid clusters.",
+          summary: "Centralized monitoring, cost anomaly isolation, and proactive rightsizing algorithms for engineering leaders who value uptime and fiscal discipline.",
+          features: [
+            { title: "Fleet-Wide Metric Telemetry", desc: "Simulate and monitor thousands of Kubernetes pods, serverless endpoints, and object storage." },
+            { title: "Automated FinOps Anomalies", desc: "Real-time alerts identifying run-away cloud spend before end-of-month invoice shocks." },
+            { title: "Rightsizing Engine", desc: "Continuous algorithmic analysis of CPU and memory waste with one-click re-allocation advice." },
+            { title: "Simulated Fault Injection", desc: "Test regional latency and zone failure resilience safely within a virtual sandbox environment." }
+          ],
+          mockupData: {
+            stats: [
+              { label: "Active Workloads", val: "1,240 pods" },
+              { label: "FinOps Run-rate", val: "$12,420/mo" },
+              { label: "Fleet Uptime", val: "99.998%" }
+            ],
+            metrics: [
+              { service: "us-east-1-ingress", cpu: "42%", mem: "68%", cost: "$1,820", state: "Optimal" },
+              { service: "eu-central-db-replica", cpu: "78%", mem: "84%", cost: "$2,450", state: "Warning" },
+              { service: "ap-southeast-auth-svc", cpu: "24%", mem: "38%", cost: "$640", state: "Optimal" }
+            ]
+          }
+        },
+        events: {
+          id: "events",
+          name: "Nexora Events",
+          category: "Event Management Software",
+          color: "#8054CE",
+          heroPill: "High-Concurrency Event Tech",
+          headline: "Flawless event staging, ticket logistics, and attendee analytics.",
+          summary: "An integrated suite designed for global summits, corporate assemblies, and hybrid conferences requiring frictionless registration and live engagement.",
+          features: [
+            { title: "High-Volume Ticket Pipeline", desc: "Zero-latency checkout queues engineered to absorb high-demand tier drops smoothly." },
+            { title: "Sub-Second Gate Validation", desc: "Rapid QR badge scanning with automatic offline caching for reliable turnstile processing." },
+            { title: "Interactive Session Agendas", desc: "Dynamic multi-track scheduling with live timezone synchronization and speaker engagement." },
+            { title: "Real-Time Floor Heatmaps", desc: "Track room occupancy, stage popularity, and exhibition sponsor interactions effortlessly." }
+          ],
+          mockupData: {
+            stats: [
+              { label: "Passes Minted", val: "4,850" },
+              { label: "Check-in Velocity", val: "0.38s" },
+              { label: "Net CSAT", val: "98.6%" }
+            ],
+            tracks: [
+              { title: "Keynote: Next-Gen Autonomous Architectures", hall: "Grand Ballroom A", cap: "1,200 / 1,200", status: "Full" },
+              { title: "Workshop: Building Scalable Cloud Observability", hall: "Pavilion 3", cap: "340 / 400", status: "Open" },
+              { title: "Executive Roundtable: Enterprise EdTech Future", hall: "Suite 12", cap: "85 / 100", status: "Open" }
+            ]
+          }
+        }
+      }
+    };
+
+    function Icon({ name, className = "w-4 h-4" }) {
+      useEffect(() => {
+        if (window.lucide) window.lucide.createIcons();
+      }, [name]);
+      return <i data-lucide={name} className={className}></i>;
+    }
+
+    function App() {
+      const [currentRoute, setCurrentRoute] = useState('home');
+      const [isMobileOpen, setIsMobileOpen] = useState(false);
+      const [demoModalOpen, setDemoModalOpen] = useState(false);
+      const [selectedDemoProduct, setSelectedDemoProduct] = useState('learn');
+      const [notification, setNotification] = useState(null);
+
+      const navigateTo = (route) => {
+        setCurrentRoute(route);
+        setIsMobileOpen(false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      const showToast = (message) => {
+        setNotification(message);
+        setTimeout(() => setNotification(null), 4000);
+      };
+
+      return (
+        <div className="min-h-screen flex flex-col bg-white text-[#171717]">
+          {/* Header */}
+          <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-black/[0.06]">
+            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+              <button onClick={() => navigateTo('home')} className="flex items-center space-x-2.5 text-left">
+                <div className="w-8 h-8 rounded-lg bg-[#171717] flex items-center justify-center text-white font-bold text-base shadow-sm">N</div>
+                <div>
+                  <span className="font-semibold text-[15px] tracking-tight block text-[#171717]">Nexora</span>
+                  <span className="text-[10px] text-neutral-400 font-mono uppercase tracking-widest block -mt-0.5">Technologies</span>
+                </div>
+              </button>
+
+              <nav className="hidden md:flex items-center space-x-2 text-[14px] font-medium text-neutral-600">
+                <button onClick={() => navigateTo('home')} className={`px-3 py-1.5 rounded-md ${currentRoute === 'home' ? 'text-black bg-neutral-100 font-semibold' : 'hover:text-black'}`}>Overview</button>
+                <button onClick={() => navigateTo('product-learn')} className={`px-3 py-1.5 rounded-md ${currentRoute === 'product-learn' ? 'text-blue-700 bg-blue-50 font-semibold' : 'hover:text-blue-600'}`}>Nexora Learn</button>
+                <button onClick={() => navigateTo('product-cloud')} className={`px-3 py-1.5 rounded-md ${currentRoute === 'product-cloud' ? 'text-emerald-700 bg-emerald-50 font-semibold' : 'hover:text-emerald-600'}`}>Nexora Cloud</button>
+                <button onClick={() => navigateTo('product-events')} className={`px-3 py-1.5 rounded-md ${currentRoute === 'product-events' ? 'text-purple-700 bg-purple-50 font-semibold' : 'hover:text-purple-600'}`}>Nexora Events</button>
+                <button onClick={() => navigateTo('pricing')} className={`px-3 py-1.5 rounded-md ${currentRoute === 'pricing' ? 'text-black bg-neutral-100 font-semibold' : 'hover:text-black'}`}>Pricing</button>
+                <button onClick={() => navigateTo('contact')} className={`px-3 py-1.5 rounded-md ${currentRoute === 'contact' ? 'text-black bg-neutral-100 font-semibold' : 'hover:text-black'}`}>Contact</button>
+              </nav>
+
+              <div className="hidden md:flex items-center space-x-3">
+                <button onClick={() => navigateTo('admin')} className="text-xs font-mono text-neutral-500 hover:text-black px-2.5 py-1.5 rounded border border-neutral-200">Admin Portal</button>
+                <button onClick={() => { setSelectedDemoProduct('learn'); setDemoModalOpen(true); }} className="bg-[#171717] hover:bg-neutral-800 text-white text-[13px] font-medium px-4 py-2 rounded-lg">Request Demo</button>
+              </div>
+
+              <button onClick={() => setIsMobileOpen(!isMobileOpen)} className="md:hidden p-2 text-neutral-600">
+                <Icon name={isMobileOpen ? "x" : "menu"} className="w-5 h-5" />
+              </button>
+            </div>
+          </header>
+
+          {notification && (
+            <div className="fixed bottom-6 right-6 z-50 bg-[#171717] text-white px-5 py-3 rounded-lg shadow-xl text-sm flex items-center space-x-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span>{notification}</span>
+            </div>
+          )}
+
+          {/* Main Views */}
+          <main className="flex-1">
+            {currentRoute === 'home' && (
+              <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-16 space-y-24">
+                <div className="text-center max-w-4xl mx-auto space-y-6">
+                  <div className="inline-flex items-center space-x-2 bg-neutral-100 border border-black/[0.08] rounded-full px-3.5 py-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                    <span className="text-xs font-medium text-neutral-700">Multi-Brand Technology Ecosystem</span>
+                  </div>
+                  <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-[#171717]">Technology that moves you forward.</h1>
+                  <p className="text-lg text-neutral-500 max-w-2xl mx-auto">Discover a smarter way to learn, manage cloud infrastructure and organize events with the Nexora ecosystem.</p>
+                  <div className="flex flex-wrap justify-center gap-3 pt-4">
+                    <button onClick={() => navigateTo('product-learn')} className="px-6 py-3 rounded-xl bg-[#171717] text-white text-sm font-semibold hover:bg-neutral-800">Explore Products</button>
+                    <button onClick={() => navigateTo('contact')} className="px-6 py-3 rounded-xl border border-black/[0.1] text-sm font-semibold hover:bg-neutral-50">Contact Sales</button>
+                  </div>
+                </div>
+
+                {/* 3 Products Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="p-7 rounded-2xl border border-black/[0.08] bg-white card-shadow flex flex-col justify-between">
+                    <div>
+                      <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#2864D7] flex items-center justify-center font-bold mb-4"><Icon name="graduation-cap" className="w-5 h-5" /></div>
+                      <h3 className="text-xl font-bold">Nexora Learn</h3>
+                      <p className="text-xs text-blue-600 font-mono mt-0.5">Cloud-Based LMS</p>
+                      <p className="text-xs text-neutral-600 mt-3 leading-relaxed">Centralized course authoring, automated grading, and learner telemetry.</p>
+                    </div>
+                    <button onClick={() => navigateTo('product-learn')} className="mt-6 text-xs font-bold text-[#2864D7] flex items-center space-x-1"><span>View Learn Platform</span><Icon name="arrow-right" className="w-3.5 h-3.5" /></button>
+                  </div>
+
+                  <div className="p-7 rounded-2xl border border-black/[0.08] bg-white card-shadow flex flex-col justify-between">
+                    <div>
+                      <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#16865B] flex items-center justify-center font-bold mb-4"><Icon name="server" className="w-5 h-5" /></div>
+                      <h3 className="text-xl font-bold">Nexora Cloud</h3>
+                      <p className="text-xs text-emerald-600 font-mono mt-0.5">Infra & FinOps</p>
+                      <p className="text-xs text-neutral-600 mt-3 leading-relaxed">Centralized multi-cloud observability, anomaly detection, and automated rightsizing.</p>
+                    </div>
+                    <button onClick={() => navigateTo('product-cloud')} className="mt-6 text-xs font-bold text-[#16865B] flex items-center space-x-1"><span>View Cloud Platform</span><Icon name="arrow-right" className="w-3.5 h-3.5" /></button>
+                  </div>
+
+                  <div className="p-7 rounded-2xl border border-black/[0.08] bg-white card-shadow flex flex-col justify-between">
+                    <div>
+                      <div className="w-10 h-10 rounded-xl bg-purple-50 text-[#8054CE] flex items-center justify-center font-bold mb-4"><Icon name="calendar" className="w-5 h-5" /></div>
+                      <h3 className="text-xl font-bold">Nexora Events</h3>
+                      <p className="text-xs text-purple-600 font-mono mt-0.5">Event Operations</p>
+                      <p className="text-xs text-neutral-600 mt-3 leading-relaxed">High-volume ticketing pipelines, sub-second QR badge scans, and agenda syncing.</p>
+                    </div>
+                    <button onClick={() => navigateTo('product-events')} className="mt-6 text-xs font-bold text-[#8054CE] flex items-center space-x-1"><span>View Events Platform</span><Icon name="arrow-right" className="w-3.5 h-3.5" /></button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {currentRoute.startsWith('product-') && (
+              <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-16 space-y-12">
+                {(() => {
+                  const key = currentRoute.replace('product-', '');
+                  const p = BRAND_CONFIG.products[key];
+                  return (
+                    <>
+                      <div>
+                        <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: p.color }}>{p.category}</span>
+                        <h1 className="text-3xl sm:text-5xl font-bold mt-2">{p.headline}</h1>
+                        <p className="text-neutral-600 text-base max-w-2xl mt-4 leading-relaxed">{p.summary}</p>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {p.features.map((f, i) => (
+                          <div key={i} className="p-6 rounded-2xl border border-black/[0.08] bg-white card-shadow">
+                            <div className="font-mono text-xs font-bold mb-2" style={{ color: p.color }}>0{i+1}</div>
+                            <h4 className="text-base font-bold">{f.title}</h4>
+                            <p className="text-xs text-neutral-600 mt-1.5 leading-relaxed">{f.desc}</p>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="p-8 rounded-2xl bg-neutral-50 border border-black/[0.08] text-center">
+                        <h3 className="text-xl font-bold">Schedule an Architecture Evaluation</h3>
+                        <p className="text-xs text-neutral-500 mt-1 max-w-md mx-auto">Get simulated sandbox credentials to test {p.name} with your team.</p>
+                        <button onClick={() => { setSelectedDemoProduct(key); setDemoModalOpen(true); }} className="mt-5 px-6 py-2.5 rounded-xl text-white text-xs font-semibold" style={{ backgroundColor: p.color }}>Request {p.name} Sandbox</button>
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+            )}
+
+            {currentRoute === 'pricing' && (
+              <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-16 text-center space-y-12">
+                <div>
+                  <h1 className="text-3xl sm:text-4xl font-bold">Predictable SaaS Plans</h1>
+                  <p className="text-neutral-500 text-sm mt-2">Transparent pricing designed for scale.</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                  {['Starter ($71/mo)', 'Professional ($199/mo)', 'Enterprise ($559/mo)'].map((t, idx) => (
+                    <div key={idx} className="p-8 rounded-2xl border border-black/[0.08] bg-white card-shadow flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-lg font-bold">{t.split(' (')[0]}</h3>
+                        <div className="text-2xl font-mono font-bold mt-3">{t.split(' ')[1].replace(')', '')}</div>
+                        <p className="text-xs text-neutral-500 mt-1">Billed annually</p>
+                      </div>
+                      <button onClick={() => navigateTo('contact')} className="mt-8 w-full py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-xs font-semibold">Contact Sales</button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {currentRoute === 'contact' && (
+              <div className="max-w-[700px] mx-auto px-4 sm:px-6 py-16">
+                <div className="text-center mb-8">
+                  <h1 className="text-3xl font-bold">Contact Nexora</h1>
+                  <p className="text-xs text-neutral-500 mt-1">Submit inquiries directly to our solutions architecture team.</p>
+                </div>
+                <form onSubmit={(e) => { e.preventDefault(); showToast("Inquiry saved to database."); }} className="bg-white p-8 rounded-2xl border border-black/[0.08] card-shadow space-y-4 text-xs">
+                  <div>
+                    <label className="font-semibold block mb-1">Full Name</label>
+                    <input required type="text" placeholder="Alex Rivera" className="w-full p-2.5 rounded-lg border border-neutral-200 text-sm" />
+                  </div>
+                  <div>
+                    <label className="font-semibold block mb-1">Work Email</label>
+                    <input required type="email" placeholder="alex@company.org" className="w-full p-2.5 rounded-lg border border-neutral-200 text-sm" />
+                  </div>
+                  <div>
+                    <label className="font-semibold block mb-1">Product</label>
+                    <select className="w-full p-2.5 rounded-lg border border-neutral-200 text-sm bg-white">
+                      <option>Nexora Learn</option>
+                      <option>Nexora Cloud</option>
+                      <option>Nexora Events</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="font-semibold block mb-1">Message</label>
+                    <textarea required rows="3" placeholder="Tell us about your technical requirements..." className="w-full p-2.5 rounded-lg border border-neutral-200 text-sm"></textarea>
+                  </div>
+                  <button type="submit" className="w-full py-3 rounded-xl bg-black text-white font-semibold">Transmit Inquiry</button>
+                </form>
+              </div>
+            )}
+
+            {currentRoute === 'admin' && (
+              <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-16 space-y-6">
+                <div className="flex justify-between items-center pb-4 border-b">
+                  <h1 className="text-2xl font-bold">Admin Console</h1>
+                  <span className="text-xs font-mono bg-emerald-50 text-emerald-700 px-2 py-1 rounded">Session: Active</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
+                  <div className="p-4 border rounded-xl"><div>Total Leads</div><div className="text-2xl font-bold mt-1">24</div></div>
+                  <div className="p-4 border rounded-xl"><div>Telemetry Status</div><div className="text-2xl font-bold text-emerald-600 mt-1">Healthy</div></div>
+                  <div className="p-4 border rounded-xl"><div>Active Nodes</div><div className="text-2xl font-bold mt-1">1,240</div></div>
+                </div>
+              </div>
+            )}
+          </main>
+
+          {/* Footer */}
+          <footer className="border-t border-black/[0.06] bg-neutral-50 py-10 text-xs text-neutral-500">
+            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div>© {new Date().getFullYear()} Nexora Technologies Inc. All simulated product telemetry and demo assets reserved.</div>
+              <div className="flex space-x-4">
+                <button onClick={() => navigateTo('home')}>Home</button>
+                <button onClick={() => navigateTo('pricing')}>Pricing</button>
+                <button onClick={() => navigateTo('contact')}>Contact</button>
+              </div>
+            </div>
+          </footer>
+
+          {/* Demo Modal */}
+          {demoModalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+              <div className="bg-white rounded-2xl max-w-sm w-full p-6 text-xs space-y-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-base font-bold">Request Demo Sandbox</h3>
+                  <button onClick={() => setDemoModalOpen(false)}>✕</button>
+                </div>
+                <p className="text-neutral-500">Enter your email to receive simulated login credentials.</p>
+                <input type="email" placeholder="work@email.com" className="w-full p-2.5 border rounded-lg" />
+                <button onClick={() => { setDemoModalOpen(false); showToast("Sandbox access email dispatched."); }} className="w-full py-2.5 bg-black text-white font-semibold rounded-lg">Provision Access</button>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
